@@ -11,10 +11,10 @@ wwwuser=$(ps u $wwwsubproc | tail -1 | cut -d" " -f1) # Hopefully the user runni
 
 
 if [ "$wwwproc" != "root" ] ; then
-  wwwuser="apache" # Educated guess
+  wwwuser="www-data" # Educated guess
 fi
 
-if [ ! -e tmp ] ; then 
+if [ ! -e tmp ] ; then
   mkdir tmp
 fi
 
@@ -24,20 +24,20 @@ fi
 
 chmod 777 tmp reports
 
-chown -R $wwwuser * 
+chown -R $wwwuser *
 
 ls -ld tmp reports
 
 # Check for SELinux
 if [ "$(which getenforce)" != "" ] ; then
-	echo ""
-	echo "SELinux seems to be installed. We will try to fix context. It may not be enough ..."
+        echo ""
+        echo "SELinux seems to be installed. We will try to fix context. It may not be enough ..."
 
         # SELinux serve files off Apache, resursive
         chcon -t httpd_sys_content_t $(pwd) -R
- 
+
         # Fix anything SELinux might be cross about
-  	restorecon -vvR $(pwd)
+        restorecon -vvR $(pwd)
 
         # Allow write only to specific dirs
         chcon -t httpd_sys_rw_content_t $(pwd)/reports -R
