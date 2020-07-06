@@ -10,10 +10,10 @@
 // v0.1 - 1/14/12 - (c) Travis Mathis - travisdmathis@gmail.com
 // Change Log: Added Form Selection, Data Gathering, Report Generation w/ basic time period selection
 // pdfform.php(selection) / generatereport.php(report building) / pdf.php(report)i
-// v0.2 - 2/7/12 
+// v0.2 - 2/7/12
 // Change Log: Removed mysql specific calls and replaced with API calls.  Moved config to central file
 // v0.5 - 2014/09/05 - Ronny Pettersen <pettersen.ronny @ gmail.com>
-//	Rewritten a lot based on original from Travis Mathis. Allows reporting on group.
+//      Rewritten a lot based on original from Travis Mathis. Allows reporting on group.
 //      Uses Jquery (javascript) for many of the functions on the index page.
 //
 ///////////
@@ -30,7 +30,7 @@ if ( $z_user == "" ) {
   header("Location: index.php");
 }
 
-$z_login_data	= "name=" .$z_user ."&password=" .$z_pass ."&autologin=1&enter=Sign+in";
+$z_login_data   = "name=" .$z_user ."&password=" .$z_pass ."&autologin=1&enter=Sign+in";
 }
 
 global $z_user, $z_pass, $z_login_data;
@@ -43,79 +43,79 @@ header( 'Content-type: text/html; charset=utf-8' );
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
-	<title>Zabbix Dynamic PDF Report</title>
-	<meta charset="utf-8" />
-	<link rel="shortcut icon" href="/zabbix/favicon.ico" />
-	<link rel="stylesheet" type="text/css" href="css/zabbix.default.css" />
-	<link rel="stylesheet" type="text/css" href="css/zabbix.color.css" />
-	<link rel="stylesheet" type="text/css" href="css/zabbix.report.css" />
-	<link rel="stylesheet" type="text/css" href="js/jquery.datetimepicker.css"/ >
-	<link rel="stylesheet" type="text/css" href="css/tablesorter.css"/ >
-	<link rel="stylesheet" type="text/css" href="css/select2.css"/ >
-	<script type="text/javascript" src="js/jquery.js"></script>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+        <title>Zabbix Dynamic PDF Report</title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="/zabbix/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="css/zabbix.default.css" />
+        <link rel="stylesheet" type="text/css" href="css/zabbix.color.css" />
+        <link rel="stylesheet" type="text/css" href="css/zabbix.report.css" />
+        <link rel="stylesheet" type="text/css" href="js/jquery.datetimepicker.css"/ >
+        <link rel="stylesheet" type="text/css" href="css/tablesorter.css"/ >
+        <link rel="stylesheet" type="text/css" href="css/select2.css"/ >
+        <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="js/jquery.datetimepicker.js"></script>
-	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="js/jquery.tablesorter.min.js"></script> 
-	<script type="text/javascript" src="js/select2.min.js"></script> 
-	<script>
-		$(function(){
-			$('#ReportHost').click(function(){
-				$('#s_ReportHost').prop('disabled',false);
-				$('#s_ReportHostGroup').prop('disabled',true);
-				$('#s_ReportHost').prop('required',true);
-				$('#s_ReportHostGroup').prop('required',false);
-				$('#p_ReportHostGroup').hide('fast');
-				$('#p_ReportHost').show('slow');
-			});
-			$('#ReportHostGroup').click(function(){
-				$('#s_ReportHostGroup').prop('disabled',false);
-				$('#s_ReportHost').prop('disabled',true);
-				$('#s_ReportHostGroup').prop('required',true);
-				$('#s_ReportHost').prop('required',false);
-				$('#p_ReportHost').hide('fast');
-				$('#p_ReportHostGroup').show('slow');
-			});
-			$('#RangeLast').click(function(){
-				$('#s_RangeLast').prop('disabled',false);
-				$('#datepicker_start').prop('disabled',true);
-				$('#timepicker_start').prop('disabled',true);
-				$('#datepicker_end').prop('disabled',true);
-				$('#timepicker_end').prop('disabled',true);
-				$('#datepicker_start').prop('required',false);
-				$('#p_RangeCustom').hide('fast');
-				$('#p_RangeLast').show('slow');
-			});
-			$('#RangeCustom').click(function(){
-				$('#datepicker_start').prop('disabled',false);
-				$('#timepicker_start').prop('disabled',false);
-				$('#datepicker_end').prop('disabled',false);
-				$('#timepicker_end').prop('disabled',false);
-				$('#datepicker_start').prop('required',true);
-				$('#s_RangeLast').prop('disabled',true);
-				$('#s_RangeLast').prop('required',false);
-				$('#p_RangeCustom').show('slow');
-				$('#p_RangeLast').hide('fast');
-			});
-			$('#h_OldReports').click(function(){
-				$(".d_OldReports").toggleClass('table-hidden');
-			});
-		});
+        <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="js/jquery.tablesorter.min.js"></script>
+        <script type="text/javascript" src="js/select2.min.js"></script>
+        <script>
+                $(function(){
+                        $('#ReportHost').click(function(){
+                                $('#s_ReportHost').prop('disabled',false);
+                                $('#s_ReportHostGroup').prop('disabled',true);
+                                $('#s_ReportHost').prop('required',true);
+                                $('#s_ReportHostGroup').prop('required',false);
+                                $('#p_ReportHostGroup').hide('fast');
+                                $('#p_ReportHost').show('slow');
+                        });
+                        $('#ReportHostGroup').click(function(){
+                                $('#s_ReportHostGroup').prop('disabled',false);
+                                $('#s_ReportHost').prop('disabled',true);
+                                $('#s_ReportHostGroup').prop('required',true);
+                                $('#s_ReportHost').prop('required',false);
+                                $('#p_ReportHost').hide('fast');
+                                $('#p_ReportHostGroup').show('slow');
+                        });
+                        $('#RangeLast').click(function(){
+                                $('#s_RangeLast').prop('disabled',false);
+                                $('#datepicker_start').prop('disabled',true);
+                                $('#timepicker_start').prop('disabled',true);
+                                $('#datepicker_end').prop('disabled',true);
+                                $('#timepicker_end').prop('disabled',true);
+                                $('#datepicker_start').prop('required',false);
+                                $('#p_RangeCustom').hide('fast');
+                                $('#p_RangeLast').show('slow');
+                        });
+                        $('#RangeCustom').click(function(){
+                                $('#datepicker_start').prop('disabled',false);
+                                $('#timepicker_start').prop('disabled',false);
+                                $('#datepicker_end').prop('disabled',false);
+                                $('#timepicker_end').prop('disabled',false);
+                                $('#datepicker_start').prop('required',true);
+                                $('#s_RangeLast').prop('disabled',true);
+                                $('#s_RangeLast').prop('required',false);
+                                $('#p_RangeCustom').show('slow');
+                                $('#p_RangeLast').hide('fast');
+                        });
+                        $('#h_OldReports').click(function(){
+                                $(".d_OldReports").toggleClass('table-hidden');
+                        });
+                });
 
-		$(document).ready(function() {
-			$('#s_ReportHostGroup').prop('disabled',true);
-			$('#datepicker_start').prop('disabled',true);
-			$('#timepicker_start').prop('disabled',true);
-			$('#datepicker_end').prop('disabled',true);
-			$('#timepicker_end').prop('disabled',true);
-			$('#p_ReportHostGroup').hide('fast');
-			$('#p_RangeCustom').hide('fast');
-			$('#OldReports').tablesorter();
-			$("#s_ReportHost").select2({width: "copy"});
-			$("#s_ReportHostGroup").select2({width: "copy"});
-			$("#s_RangeLast").select2();
-		});
-		</script>
+                $(document).ready(function() {
+                        $('#s_ReportHostGroup').prop('disabled',true);
+                        $('#datepicker_start').prop('disabled',true);
+                        $('#timepicker_start').prop('disabled',true);
+                        $('#datepicker_end').prop('disabled',true);
+                        $('#timepicker_end').prop('disabled',true);
+                        $('#p_ReportHostGroup').hide('fast');
+                        $('#p_RangeCustom').hide('fast');
+                        $('#OldReports').tablesorter();
+                        $("#s_ReportHost").select2({width: "copy"});
+                        $("#s_ReportHostGroup").select2({width: "copy"});
+                        $("#s_RangeLast").select2();
+                });
+                </script>
 </head>
 <body class="originalblue">
 <div id="message-global-wrap"><div id="message-global"></div></div>
@@ -130,18 +130,17 @@ set_time_limit(60);
 
 // ZabbixAPI Connection
 if ($zabbix_version < 5.0 ) {
-  ZabbixAPI::debugEnabled(TRUE);
 }
 
 ZabbixAPI::login($z_server,$z_user,$z_pass)
-	or die('Unable to login: '.print_r(ZabbixAPI::getLastError(),true));
+        or die('Unable to login: '.print_r(ZabbixAPI::getLastError(),true));
 //fetch graph data host
 $hosts       = ZabbixAPI::fetch_array('host','get',array('output'=>array('hostid','name'),'sortfield'=>'host','with_graphs'=>'1','sortfield'=>'name'))
-	or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
+        or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
 $host_groups = ZabbixAPI::fetch_array('hostgroup','get', array('output'=>array('groupid','name'),'real_hosts'=>'1','with_graphs'=>'1','sortfield'=>'name') )
-	or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
+        or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
 ZabbixAPI::logout($z_server,$z_user,$z_pass)
-	or die('Unable to logout: '.print_r(ZabbixAPI::getLastError(),true));
+        or die('Unable to logout: '.print_r(ZabbixAPI::getLastError(),true));
 
 //var_dump($hosts);
 //var_dump($host_group);
