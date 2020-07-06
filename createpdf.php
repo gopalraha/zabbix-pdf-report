@@ -1,6 +1,6 @@
 <?php
 //////////
-// 
+//
 // (c) Travis Mathis - travisdmathis@gmail.com
 // Zabbix Report Generator v0.9
 //
@@ -15,13 +15,13 @@ if ( $user_login == 1 ) {
 session_start();
 //print_r($_SESSION);
 if ( $allow_localhost == 1 ) {
-	if ( $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
-		$z_user=$_SESSION['username'];
-		$z_pass=$_SESSION['password'];
-	}
+        if ( $_SERVER['REMOTE_ADDR'] != '127.0.0.1') {
+                $z_user=$_SESSION['username'];
+                $z_pass=$_SESSION['password'];
+        }
 } else {
-	$z_user=$_SESSION['username'];
-	$z_pass=$_SESSION['password'];
+        $z_user=$_SESSION['username'];
+        $z_pass=$_SESSION['password'];
 }
 
 /*
@@ -38,7 +38,7 @@ if ( $z_user == "" ) {
   header("Location: index.php");
 }
 
-$z_login_data	= "name=" .$z_user ."&password=" .$z_pass ."&autologin=1&enter=Sign+in";
+$z_login_data   = "name=" .$z_user ."&password=" .$z_pass ."&autologin=1&enter=Sign+in";
 }
 
 global $z_user, $z_pass, $z_login_data;
@@ -59,60 +59,60 @@ if (isset($_GET['TriggersOn'])) { $TriggersOn="yes"; }
 if (isset($_GET['ItemsOn'])) { $ItemsOn="yes"; }
 if (isset($_GET['TrendsOn'])) { $TrendsOn="yes"; }
 
-if (isset($_GET['debug']))	 { $debug	= true; } 
-else				 { $debug	= false; }
-if (isset($_GET['HostID']))	 { $hostid	= filter_input(INPUT_GET,'HostID', FILTER_SANITIZE_STRING); }
-if (isset($_GET['GroupID']))	 { $groupid	= filter_input(INPUT_GET,'GroupID', FILTER_SANITIZE_STRING); }
-if (isset($_GET['ReportType']))  { $reporttype	= filter_input(INPUT_GET,'ReportType', FILTER_SANITIZE_STRING); }
+if (isset($_GET['debug']))       { $debug       = true; }
+else                             { $debug       = false; }
+if (isset($_GET['HostID']))      { $hostid      = filter_input(INPUT_GET,'HostID', FILTER_SANITIZE_STRING); }
+if (isset($_GET['GroupID']))     { $groupid     = filter_input(INPUT_GET,'GroupID', FILTER_SANITIZE_STRING); }
+if (isset($_GET['ReportType']))  { $reporttype  = filter_input(INPUT_GET,'ReportType', FILTER_SANITIZE_STRING); }
 if (isset($_GET['ReportRange'])) {
-	if ($_GET['ReportRange'] == "last") {
-		$timeperiod		= filter_input(INPUT_GET,'timePeriod', FILTER_SANITIZE_STRING);
-		// Format $timeperiod into seconds 
-		if    ($timeperiod == 'Hour')		{ $timeperiod = '3600';     }
-		elseif($timeperiod == 'Day')		{ $timeperiod = '86400';    }
-		elseif($timeperiod == 'PrevDay')	{ $timeperiod = '86400';    }
-		elseif($timeperiod == 'Week')		{ $timeperiod = '604800';   }
-		elseif($timeperiod == 'PrevWeek')	{ $timeperiod = '604800';   }
-		elseif($timeperiod == 'Month')		{ $timeperiod = '2678400';  }
-		elseif($timeperiod == 'PrevMonth')	{ $timeperiod = '2678400';  }
-		elseif($timeperiod == 'Year')		{ $timeperiod = '31536000'; }
-		$starttime = time() - $timeperiod;
-		$stime      = date('YmdHis',$starttime);
-		$endtime   = time();
-	}
-	elseif ($_GET['ReportRange'] == "custom") {
-		//var_dump($_GET);
-		// TODO: Check if start/end is empty
-		if (isset($_GET['startdate'])) {
-			if ($_GET['startdate'] == "") { 
-				echo "<font color=\"red\"><h1>Startdate is missing!</h1></font></br>\n";
-				echo "When setting custom report period, startdate is required</br>\n";
-				exit;
-			}
-		}
-		$starttime  = strtotime($_GET['startdate'] . " " . $_GET['starttime']);
-		$stime      = date('YmdHis',$starttime);
-		$endtime    = strtotime($_GET['enddate'] . " " . $_GET['endtime']);
-		$timeperiod = $endtime - $starttime;
-		if ($starttime > $endtime) { 
-			echo "<font color=\"red\"><h1>Startdate need to be before tomorrow or end date!</h1></font></br>\n"; 
-			exit;
-		} elseif ($endtime - $starttime < 3600) {
-			echo "<font color=\"red\"><h1>Time frame need to be minimum 1 hour!</h1></font></br>\n"; 
-			exit;
-		}
-	}
-	else {
-		echo "Unknown time report range!\n";
-		exit;
-	}
+        if ($_GET['ReportRange'] == "last") {
+                $timeperiod             = filter_input(INPUT_GET,'timePeriod', FILTER_SANITIZE_STRING);
+                // Format $timeperiod into seconds
+                if    ($timeperiod == 'Hour')           { $timeperiod = '3600';     }
+                elseif($timeperiod == 'Day')            { $timeperiod = '86400';    }
+                elseif($timeperiod == 'PrevDay')        { $timeperiod = '86400';    }
+                elseif($timeperiod == 'Week')           { $timeperiod = '604800';   }
+                elseif($timeperiod == 'PrevWeek')       { $timeperiod = '604800';   }
+                elseif($timeperiod == 'Month')          { $timeperiod = '2678400';  }
+                elseif($timeperiod == 'PrevMonth')      { $timeperiod = '2678400';  }
+                elseif($timeperiod == 'Year')           { $timeperiod = '31536000'; }
+                $starttime = time() - $timeperiod;
+                $stime      = date('YmdHis',$starttime);
+                $endtime   = time();
+        }
+        elseif ($_GET['ReportRange'] == "custom") {
+                //var_dump($_GET);
+                // TODO: Check if start/end is empty
+                if (isset($_GET['startdate'])) {
+                        if ($_GET['startdate'] == "") {
+                                echo "<font color=\"red\"><h1>Startdate is missing!</h1></font></br>\n";
+                                echo "When setting custom report period, startdate is required</br>\n";
+                                exit;
+                        }
+                }
+                $starttime  = strtotime($_GET['startdate'] . " " . $_GET['starttime']);
+                $stime      = date('YmdHis',$starttime);
+                $endtime    = strtotime($_GET['enddate'] . " " . $_GET['endtime']);
+                $timeperiod = $endtime - $starttime;
+                if ($starttime > $endtime) {
+                        echo "<font color=\"red\"><h1>Startdate need to be before tomorrow or end date!</h1></font></br>\n";
+                        exit;
+                } elseif ($endtime - $starttime < 3600) {
+                        echo "<font color=\"red\"><h1>Time frame need to be minimum 1 hour!</h1></font></br>\n";
+                        exit;
+                }
+        }
+        else {
+                echo "Unknown time report range!\n";
+                exit;
+        }
 }
 if (isset($_GET['mygraphs2'])) { $mygraphs=$_GET['mygraphs2']; } // Use the manually specified values for what graphs to show
 if (isset($_GET['myitems2'])) { $myitemgraphs=$_GET['myitems2']; } // Use the manually specified values for what graphs to show
 
 // Calculate report starttime and endtime
-$report_start	= date('Y.m.d H:i',$starttime);
-$report_end	= date('Y.m.d H:i',$endtime);
+$report_start   = date('Y.m.d H:i',$starttime);
+$report_end     = date('Y.m.d H:i',$endtime);
 
 # print <<< ENDHTML
 #</br>
@@ -124,22 +124,22 @@ $report_end	= date('Y.m.d H:i',$endtime);
 #ENDHTML;
 
 // Setup temporary file/directory names
-$z_tmpimg_path	= tempdir($z_tmp_path);
-$tmp_pdf_data	= tempnam($z_tmp_path,"zabbix_report");
+$z_tmpimg_path  = tempdir($z_tmp_path);
+$tmp_pdf_data   = tempnam($z_tmp_path,"zabbix_report");
 // Set Timezone
 date_default_timezone_set("$timezone");
 
 // Print Header if debug is on
 if ($debug) {
-	header( 'Content-type: text/html; charset=utf-8' );
-	if (isset($hostid)) { echo "<b>HostID: </b>" .$hostid ."</br>\n"; }
-	if (isset($groupid)) { echo "<b>GroupID: </b>" .$groupid ."</br>\n"; }
-	if (isset($reporttype)) { echo "<b>Report Type: </b>" .$reporttype ."</br>\n"; }
-	if (isset($timeperiod)) { echo "<b>Time Period: </b>" .$timeperiod ."</br>\n"; }
-	echo "<b>Temp image path: </b>" .$z_tmpimg_path ."</br>\n";
-	echo "</br>\n";
-	flush();
-	ob_flush();
+        header( 'Content-type: text/html; charset=utf-8' );
+        if (isset($hostid)) { echo "<b>HostID: </b>" .$hostid ."</br>\n"; }
+        if (isset($groupid)) { echo "<b>GroupID: </b>" .$groupid ."</br>\n"; }
+        if (isset($reporttype)) { echo "<b>Report Type: </b>" .$reporttype ."</br>\n"; }
+        if (isset($timeperiod)) { echo "<b>Time Period: </b>" .$timeperiod ."</br>\n"; }
+        echo "<b>Temp image path: </b>" .$z_tmpimg_path ."</br>\n";
+        echo "</br>\n";
+        flush();
+        ob_flush();
 }
 // get graphids
 // Login to Zabbix API using ZabbixAPI.class.php
@@ -148,7 +148,7 @@ if ( $zabbix_version < 5.0 ) {
 }
 
 ZabbixAPI::login($z_server,$z_user,$z_pass)
-	or die('Unable to login: '.print_r(ZabbixAPI::getLastError(),true));
+        or die('Unable to login: '.print_r(ZabbixAPI::getLastError(),true));
 
 #save graphs to directory for selected host
 $fh = fopen($tmp_pdf_data, 'w');
@@ -163,42 +163,42 @@ fwrite($fh, $stringData);
 fclose($fh);
 
 if ($reporttype == 'host') {
-	if (!is_numeric($hostid)) { echo "ERROR: Need hostid for host report!</br>\n"; exit; }
-	$hosts  = ZabbixAPI::fetch_array('host','get',array('output'=>array('hostid','name'),'with_graphs'=>'true','hostids'=>$hostid))
-		or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
-	//var_dump($hosts);
-	// Get name to be used in PLACEHOLDER-part of filename
-	$name = $hosts[0]['name'];
-	$reportname=str_replace(" ", "_",$name);
-	CreatePDF($hosts);
+        if (!is_numeric($hostid)) { echo "ERROR: Need hostid for host report!</br>\n"; exit; }
+        $hosts  = ZabbixAPI::fetch_array('host','get',array('output'=>array('hostid','name'),'with_graphs'=>'true','hostids'=>$hostid))
+                or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
+        //var_dump($hosts);
+        // Get name to be used in PLACEHOLDER-part of filename
+        $name = $hosts[0]['name'];
+        $reportname=str_replace(" ", "_",$name);
+        CreatePDF($hosts);
 }
 elseif ($reporttype == 'hostgroup') {
-	if (!is_numeric($groupid)) { echo "ERROR: Need groupid for group report!</br>\n"; exit; }
-	$hosts  = ZabbixAPI::fetch_array('host','get',array('output'=>array('hostid','name'),'with_graphs'=>'true','groupids'=>$groupid))
-		or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
-	//var_dump($hosts);
-	$hostgroupname = ZabbixAPI::fetch_array('hostgroup','get',array('output'=>array('name'),'groupids'=>$groupid))
-		or die('Unable to get hostgroup: '.print_r(ZabbixAPI::getLastError(),true));
-	//var_dump($hostgroupname);
-	$name = $hostgroupname[0]['name'];
-	$reportname=str_replace(" ", "_",$name);
-	$reportname=str_replace("/", "--",$name);
-	CreatePDF($hosts);
+        if (!is_numeric($groupid)) { echo "ERROR: Need groupid for group report!</br>\n"; exit; }
+        $hosts  = ZabbixAPI::fetch_array('host','get',array('output'=>array('hostid','name'),'with_graphs'=>'true','groupids'=>$groupid))
+                or die('Unable to get hosts: '.print_r(ZabbixAPI::getLastError(),true));
+        //var_dump($hosts);
+        $hostgroupname = ZabbixAPI::fetch_array('hostgroup','get',array('output'=>array('name'),'groupids'=>$groupid))
+                or die('Unable to get hostgroup: '.print_r(ZabbixAPI::getLastError(),true));
+        //var_dump($hostgroupname);
+        $name = $hostgroupname[0]['name'];
+        $reportname=str_replace(" ", "_",$name);
+        $reportname=str_replace("/", "--",$name);
+        CreatePDF($hosts);
 }
 else {
-	echo "Report type not selected!\n";
-	exit;
+        echo "Report type not selected!\n";
+        exit;
 }
 
 //
 // Create PDF
 //
 if (!file_exists($tmp_pdf_data)) {
-	echo "Report $tmp_pdf_data not found! Cannot continue to create PDF.";
-	exit;
+        echo "Report $tmp_pdf_data not found! Cannot continue to create PDF.";
+        exit;
 }
 
-$pdf_filename	= "$reportname.pdf";
+$pdf_filename   = "$reportname.pdf";
 
 //$pdf = new Cezpdf('a4','portrait');
 $pdf = new Creport("$paper_format","$paper_orientation");
@@ -211,7 +211,7 @@ $pdf->saveState();
 $pdf->setStrokeColor(0,0,0,1);
 $pdf->line(20,40,578,40);
 $pdf->line(20,822,578,822);
-$pdf->addText(50,34,6,'Generated by Zabbix Monitoring Dynamic Report v' . $version);
+$pdf->addText(50,34,6,'Generated by Zabbix Monitoring System v' . $version);
 $pdf->restoreState();
 $pdf->closeObject();
 // note that object can be told to appear on just odd or even pages by changing 'all' to 'odd'
@@ -253,7 +253,7 @@ $pdf->selectFont($mainFont);
 if (file_exists($pdf_logo)){
   //$pdf->addPngFromFile($pdf_logo,199,$pdf->y-375,200,0);
   $pdf->addPngFromFile($pdf_logo,50,$pdf->y,200,0);
-  if ($debug) { 
+  if ($debug) {
     echo "$pdf_logo written to PDF-file ...<br/>";
   }
 } else if ($debug) {
@@ -275,7 +275,7 @@ $collecting=0;
 $code='';
 
 foreach ($data as $key => $line){
-  // go through each line, showing it as required, if it is surrounded by '<>' then 
+  // go through each line, showing it as required, if it is surrounded by '<>' then
   // assume that it is a title
   $line=chop($line);
   if (strlen($line) && $line[0]=='#'){
@@ -313,7 +313,7 @@ foreach ($data as $key => $line){
     // then this is a title
     switch($line[0]){
       case '1':
-		$tmp = substr($line,2,strlen($line)-3);
+                $tmp = substr($line,2,strlen($line)-3);
         $tmp2 = $tmp.'<C:rf:1'.rawurlencode($tmp).'>';
         $pdf->ezText($tmp2,26,array('justification'=>'centre'));
         break;
@@ -342,15 +342,15 @@ foreach ($data as $key => $line){
         break;
     }
   } else if (((strlen($line)>1 && $line[0]=='[') ) && $line[strlen($line)-1]==']') {
-  		$var = str_replace("[","",$line);
-		$image = str_replace("]","",$var);
-		$pdf->EzImage($image, '28', '470', 'none', 'centre');
+                $var = str_replace("[","",$line);
+                $image = str_replace("]","",$var);
+                $pdf->EzImage($image, '28', '470', 'none', 'centre');
   } else {
     // then this is just text
     // the ezpdf function will take care of all of the wrapping etc.
     $pdf->ezText($line,$size,$textOptions);
   }
-  
+
 }
 
 $pdf->ezStopPageNumbers(1,1);
